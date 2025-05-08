@@ -6,6 +6,8 @@ A modern Express.js server built with TypeScript.
 
 - Express.js with TypeScript
 - ESLint for code quality
+- JWT Authentication
+- TypeScript Path Aliases
 - Prisma Postgres for structured data
 - Jest for testing
 - Docker support
@@ -51,15 +53,21 @@ docker run -p 3000:3000 myfo-test-server
 
 - `GET /health` - Health check endpoint
 - `GET /api` - API root endpoint
+- `GET /api/v1/accounts` - Account details (JWT authentication required)
+- `POST /api/v1/auth/login` - Get Auth Token
 
 ## Project Structure
 
 ```
 src/
   ├── controllers/    # Route controllers
-  ├── middleware/     # Custom middleware
+  ├── middleware/     # Custom middleware including JWT authentication
   ├── prisma/         # Data models
   ├── routes/         # API routes
+  │   └── v1/         # Version 1 API routes
+  │       ├── accounts/  # Account endpoints
+  │       └── auth/      # Authentication endpoints
+  ├── utils/          # Utility functions (like logger)
   ├── config.ts       # Configuration
   ├── index.ts        # App entry point
   └── index.test.ts   # Main tests
@@ -78,11 +86,14 @@ src/
 - [x] Verify Docker container works
 - [x] Set up GitHub Actions workflow
 - [x] Create project documentation
+- [x] Add JWT authentication
+- [x] Configure TypeScript path aliases
+- [x] Add logging utilities
 
 ## Next Steps
 
-- [ ] Add required API routes
-- [ ] Implement Prisma Postgre database integration
-- [ ] Add JWT authentication middleware
+- [ ] Add additional API routes
+- [ ] Implement Prisma PostgreSQL database integration
+- [ ] Set up environment variables management
 - [ ] Enhance error handling & logging
-- [ ] AWS + Terraform IAC
+- [ ] AWS + Terraform IaC
