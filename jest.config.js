@@ -20,5 +20,6 @@ module.exports = {
         '^@types/(.*)$': '<rootDir>/src/types/$1',
         '^@utils/(.*)$': '<rootDir>/src/utils/$1',
         '^@/(.*)$': '<rootDir>/src/$1'
-    }
+    },
+    setupFiles: ['<rootDir>/jest.setup.js']
 }; 
