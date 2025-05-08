@@ -1,9 +1,12 @@
+require('dotenv').config();
+
 import express, { Request, Response, NextFunction } from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import cors from 'cors';
-import { config } from '@config';
 import router from '@routes/index';
+
+const PORT = process.env.PORT || 3000;
 
 // Initialize express app
 const app = express();
@@ -34,7 +37,6 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 });
 
 // Start server
-const PORT = config.port || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
