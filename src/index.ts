@@ -4,22 +4,26 @@ import express, { Request, Response, NextFunction } from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import cors from 'cors';
-import router from '@routes/index';
+import apiRouter from '@/api/index';
 
-const PORT = process.env.PORT || 3000;
+const PORT = Number(process.env.PORT);
+
+if (!PORT) {
+    throw new Error('PORT is not defined');
+}
 
 // Initialize express app
 const app = express();
 
 // Apply middleware
-app.use(helmet());
-app.use(morgan('dev'));
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(helmet());                                      // Helmet is used to secure the app by setting various HTTP headers
+app.use(morgan('dev'));                                 // Morgan is used to log the requests
+app.use(cors());                                        // Cors is used to allow cross-origin requests
+app.use(express.json());                                // Express.js is used to parse the JSON body of the request
+app.use(express.urlencoded({ extended: true }));        // Express.js is used to parse the URL-encoded body of the request
 
 // Apply routes
-app.use('/api', router);
+app.use('/api', apiRouter);
 
 // Health check endpoint
 app.get('/health', (_req: Request, res: Response) => {
@@ -37,7 +41,7 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 });
 
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
 });
 
