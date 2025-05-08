@@ -13,5 +13,13 @@ module.exports = {
     '!src/types/**/*.ts'
   ],
   coverageDirectory: 'coverage',
-  moduleFileExtensions: ['ts', 'js', 'json', 'node']
+  moduleFileExtensions: ['ts', 'js', 'json', 'node'],
+  moduleNameMapper: {
+    '^@middleware/(.*)$': '<rootDir>/src/middleware/$1',
+    '^@routes/(.*)$': '<rootDir>/src/routes/$1',
+    '^@config$': '<rootDir>/src/config.ts',
+    '^@types/(.*)$': '<rootDir>/src/types/$1',
+    '^@utils/(.*)$': '<rootDir>/src/utils/$1',
+    '^@/(.*)$': '<rootDir>/src/$1'
+  }
 }; 
