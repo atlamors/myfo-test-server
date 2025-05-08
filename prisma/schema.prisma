@@ -1,0 +1,59 @@
+// This is the datasource block where we define the database connection
+// provider: Specifies the type of database (e.g., PostgreSQL)
+// url: The connection string to the database, typically stored in an environment variable
+
+datasource db {
+    provider = "postgresql" // or your preferred database
+    url      = env("DATABASE_URL")
+}
+
+// This is the generator block for Prisma Client
+// provider: Specifies the client generator, which is used to generate the Prisma Client
+
+generator client {
+    provider = "prisma-client-js"
+    output   = "./generated/client"
+}
+
+// User model represents the users in the system
+// id: Primary key, auto-incremented
+// email: Unique email address for each user
+// password: User's password (should be stored securely, e.g., hashed)
+// accounts: One-to-many relationship with Account, a user can have multiple accounts
+
+model User {
+    id       Int       @id @default(autoincrement())
+    email    String    @unique
+    password String
+    accounts Account[] // One-to-many relationship with Account
+}
+
+// Account model represents the accounts associated with users
+// id: Primary key, auto-incremented
+// name: Name of the account
+// userId: Foreign key referencing the User model
+// user: Relation to the User model
+// transactions: One-to-many relationship with Transaction, an account can have multiple transactions
+
+model Account {
+    id           Int           @id @default(autoincrement())
+    name         String
+    userId       Int
+    user         User          @relation(fields: [userId], references: [id])
+    transactions Transaction[] // One-to-many relationship with Transaction
+}
+
+// Transaction model represents the transactions associated with accounts
+// id: Primary key, auto-incremented
+// amount: The amount involved in the transaction
+// date: The date and time when the transaction occurred
+// accountId: Foreign key referencing the Account model
+// account: Relation to the Account model
+
+model Transaction {
+    id        Int      @id @default(autoincrement())
+    amount    Float
+    date      DateTime
+    accountId Int
+    account   Account  @relation(fields: [accountId], references: [id])
+}
